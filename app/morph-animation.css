@@ -1,0 +1,206 @@
+/* Morph Animation Styles */
+.morph-animation {
+  /* Remove the background animation */
+  /* animation: morph-bg 15s ease infinite alternate; */
+  /* background-size: 200% 200%; */
+  position: relative;
+}
+
+.morph-item {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-origin: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.morph-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+  transform: translateY(-100%);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.morph-item:hover::before {
+  transform: translateY(0);
+}
+
+.morph-item-inner {
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.morph-item-inner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+.morph-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.morph-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.morph-button:hover::after {
+  animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  20% {
+    transform: scale(25, 25);
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(40, 40);
+  }
+}
+
+/* Remove the background animation keyframes */
+/* @keyframes morph-bg {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+} */
+
+/* Responsive adjustments for morph animations */
+@media (max-width: 768px) {
+  /* Remove animation-duration since we removed the animation */
+  /* .morph-animation {
+    animation-duration: 10s;
+  } */
+
+  .morph-item-inner:hover {
+    transform: none; /* Disable hover effect on mobile */
+    box-shadow: none;
+  }
+}
+
+/* Add morph effect to various elements */
+.card,
+.button,
+.badge,
+.input,
+pre,
+.collapsible {
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Add subtle animation to page transitions */
+@keyframes page-morph-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main {
+  animation: page-morph-in 0.5s ease-out forwards;
+}
+
+/* Add morph effect to headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  position: relative;
+  overflow: hidden;
+}
+
+h1::after,
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(var(--primary), 0.3), transparent);
+  transform: translateX(-100%);
+  animation: heading-underline 8s ease-in-out infinite;
+}
+
+@keyframes heading-underline {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Remove the background animation for cards */
+.bg-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Remove the pulsing background effect */
+/* .bg-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(var(--primary), 0.03) 0%, transparent 70%);
+  opacity: 0;
+  animation: bg-pulse 15s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+} */
+
+/* Remove the background pulse animation */
+/* @keyframes bg-pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+} */
+
