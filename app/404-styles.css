@@ -1,0 +1,99 @@
+/* Snowflake Effect */
+#snow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  font-size: 1.5rem;
+  color: #3b82f6; /* Brighter blue color for snowflakes */
+  text-shadow: 0 0 8px rgba(59, 130, 246, 0.7); /* Stronger glow effect */
+  user-select: none;
+  animation: snowfall linear infinite;
+  will-change: transform; /* Improve performance */
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-30px) translateY(100vh) rotate(360deg);
+  }
+}
+
+/* Control snowflake speed and size */
+.snowflake {
+  animation-duration: 10s; /* Faster animation */
+  opacity: 0.9; /* More visible */
+}
+
+/* Increase variability in size and speed */
+.snowflake:nth-child(odd) {
+  animation-duration: 12s;
+  opacity: 0.8;
+}
+
+.snowflake:nth-child(even) {
+  animation-duration: 15s;
+  opacity: 1;
+}
+
+/* Ensure compatibility with older browsers */
+@supports (-ms-ime-align: auto) {
+  /* Edge specific fixes */
+  .snowflake {
+    animation: none; /* Disable animation in Edge if it causes issues */
+  }
+}
+
+@supports (-moz-appearance: none) {
+  /* Firefox specific fixes */
+  .snowflake {
+    will-change: transform; /* Improve performance in Firefox */
+  }
+}
+
+/* iOS Safari fixes */
+@supports (-webkit-overflow-scrolling: touch) {
+  .snowflake {
+    will-change: transform; /* Improve performance in iOS Safari */
+  }
+
+  #snow-container {
+    -webkit-transform: translateZ(0); /* Force hardware acceleration */
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .snowflake {
+    font-size: 1.2rem; /* Smaller snowflakes on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .snowflake {
+    font-size: 1rem; /* Even smaller snowflakes on small mobile */
+  }
+}
+
+/* Reduce animation on devices that prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .snowflake {
+    animation-duration: 30s !important; /* Much slower animation */
+  }
+
+  #snow-container {
+    opacity: 0.5; /* Reduce visibility */
+  }
+}
+
