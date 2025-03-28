@@ -1,7 +1,7 @@
 // Site configuration
 export const siteConfig = {
   // Website information
-  name: "LatestX-Api's",
+  name: "Kenz-Api's",
   description: "Beautiful, modern, and easy-to-use API documentation",
   version: "1.0.0",
   status: "online", // "online" or "offline"
@@ -30,7 +30,7 @@ export const siteConfig = {
     src: "https://raw.githubusercontent.com/latesturl/dbCDN/refs/heads/main/logo.svg",
     width: 40,
     height: 40,
-    alt: "LatestX-Api's", // Alt text for accessibility
+    alt: "Kenzz-Api's", // Alt text for accessibility
     autoInvert: true, // Automatically invert logo color based on theme
   },
 
@@ -47,8 +47,8 @@ export const siteConfig = {
 
   // API information
   api: {
-    baseUrl: "https://api.raolprojects.my.id", // Updated base URL
-    creator: "LatestURL",
+    baseUrl: "https://kenz-api.cloudx.biz.id", // Updated base URL
+    creator: "KenzXUI",
     versions: ["v1", "v2"], // Available API versions
     defaultVersion: "v2", // Default API version
     rateLimit: {
@@ -72,7 +72,7 @@ export const siteConfig = {
 
   // Social links
   links: {
-    github: "https://github.com/latesturl",
+    github: "https://github.com/kenz-publish",
   },
 
   // Status codes
