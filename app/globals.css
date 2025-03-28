@@ -1,0 +1,325 @@
+/* Add helpful CSS comments for better organization in devtools */
+
+/* 
+ * Base styles and imports
+ * ----------------------
+ */
+@import "./404-styles.css";
+@import "./morph-animation.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+ * Theme variables
+ * --------------
+ * These define the color scheme for light/dark modes
+ */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+/* 
+ * Global base styles
+ * -----------------
+ */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Improve responsiveness when zoomed */
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Ensure content doesn't overflow on small screens */
+  pre,
+  code {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+}
+
+/* 
+ * Custom utility classes
+ * ---------------------
+ */
+.gradient-text {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(to right, #c084fc, #ec4899);
+}
+
+/* 
+ * Responsive improvements
+ * ----------------------
+ */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* 
+ * Accessibility and UX improvements
+ * --------------------------------
+ */
+/* Ensure proper scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Improve touch targets on mobile */
+button,
+[role="button"],
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+/* 
+ * Layout and background handling
+ * ----------------------------
+ */
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* 
+ * Platform-specific fixes
+ * ----------------------
+ */
+/* Fix for iOS background-attachment: fixed issue */
+@supports (-webkit-overflow-scrolling: touch) {
+  body {
+    background-attachment: scroll !important;
+  }
+}
+
+/* Fix for older Android browsers */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  body {
+    background-size: cover !important;
+    background-attachment: scroll !important;
+  }
+}
+
+/* 
+ * Layout containers
+ * ---------------
+ */
+#__next,
+.app-container {
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* 
+ * Performance optimizations
+ * -----------------------
+ */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
+/* 
+ * Custom badge styles
+ * -----------------
+ * These ensure consistent styling in production
+ */
+.badge-json {
+  @apply border-yellow-500/50 bg-yellow-500/10 text-yellow-500;
+}
+
+.badge-png {
+  @apply border-purple-500/50 bg-purple-500/10 text-purple-500;
+}
+
+.badge-jpeg {
+  @apply border-indigo-500/50 bg-indigo-500/10 text-indigo-500;
+}
+
+.badge-text {
+  @apply border-blue-500/50 bg-blue-500/10 text-blue-500;
+}
+
+.badge-bin {
+  @apply border-slate-500/50 bg-slate-500/10 text-slate-500;
+}
+
+.badge-get {
+  @apply border-green-500/50 bg-green-500/10 text-green-500;
+}
+
+.badge-post {
+  @apply border-blue-500/50 bg-blue-500/10 text-blue-500;
+}
+
+.badge-put {
+  @apply border-yellow-500/50 bg-yellow-500/10 text-yellow-500;
+}
+
+.badge-delete {
+  @apply border-red-500/50 bg-red-500/10 text-red-500;
+}
+
+.badge-mp4 {
+  @apply border-red-500/50 bg-red-500/10 text-red-500;
+}
+
+/* New badge styles */
+.badge-webm {
+  @apply border-rose-500/50 bg-rose-500/10 text-rose-500;
+}
+
+.badge-mp3 {
+  @apply border-emerald-500/50 bg-emerald-500/10 text-emerald-500;
+}
+
+.badge-wav {
+  @apply border-lime-500/50 bg-lime-500/10 text-lime-500;
+}
+
+.badge-gif {
+  @apply border-pink-500/50 bg-pink-500/10 text-pink-500;
+}
+
+.badge-svg {
+  @apply border-teal-500/50 bg-teal-500/10 text-teal-500;
+}
+
+.badge-webp {
+  @apply border-cyan-500/50 bg-cyan-500/10 text-cyan-500;
+}
+
+.badge-pdf {
+  @apply border-red-600/50 bg-red-600/10 text-red-600;
+}
+
+.badge-xml {
+  @apply border-orange-500/50 bg-orange-500/10 text-orange-500;
+}
+
+.badge-csv {
+  @apply border-green-600/50 bg-green-600/10 text-green-600;
+}
+
+.badge-html {
+  @apply border-orange-500/50 bg-orange-500/10 text-orange-500;
+}
+
+.badge-zip {
+  @apply border-amber-500/50 bg-amber-500/10 text-amber-500;
+}
+
+/* 
+ * Status code badge styles
+ * ----------------------
+ */
+.status-200 {
+  @apply bg-green-500/10 text-green-500 border-green-500/50;
+}
+
+.status-400,
+.status-403,
+.status-429 {
+  @apply bg-yellow-500/10 text-yellow-500 border-yellow-500/50;
+}
+
+.status-500 {
+  @apply bg-red-500/10 text-red-500 border-red-500/50;
+}
+
+/* 
+ * Responsive typography
+ * -------------------
+ */
+@media (max-width: 480px) {
+  .gradient-text {
+    font-size: 2.5rem !important;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+  }
+}
+
+/* Responsive adjustments for medium screens */
+@media (min-width: 481px) and (max-width: 768px) {
+  .gradient-text {
+    font-size: 3.5rem !important;
+  }
+}
+
+/* Fix for zoomed views */
+@media (max-width: 100%) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-content {
+    width: 100%;
+    padding: 0 1rem;
+  }
+}
+
