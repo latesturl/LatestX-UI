@@ -39,7 +39,7 @@ export async function GET() {
           creator: siteConfig.api.creator,
           server: cachedResponse,
           cached: true,
-          version: "v1",
+          version: "v2",
         },
         null,
         2
@@ -82,7 +82,7 @@ export async function GET() {
           status: true,
           creator: siteConfig.api.creator,
           server: serverInfo,
-          version: "v1",
+          version: "v2",
         },
         null,
         2
