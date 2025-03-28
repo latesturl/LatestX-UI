@@ -295,6 +295,20 @@ export const siteConfig = {
         },
       ],
     },
+    {
+    name: "Server",
+    color: "red",
+    endpoints: [
+      {
+        method: "GET",
+        path: "/server/info",
+        description: "Get server information",
+        mediaType: "application/json",
+        parameters: [],
+        versions: ["v2"],
+      },
+    ],
+  },
   ],
 }
 
