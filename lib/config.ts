@@ -219,9 +219,9 @@ export const siteConfig = {
   endpoints: [
     {
       method: "GET",
-      path: "/youtube/ytmp3",
+      path: "/download/ytmp3",
       description: "Convert YouTube video to MP3",
-      mediaType: "audio/mpeg",
+      mediaType: "audio/mp3",
       parameters: [
         { name: "url", type: "string", required: true, description: "YouTube video URL" },
       ],
