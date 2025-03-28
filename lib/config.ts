@@ -182,7 +182,7 @@ export const siteConfig = {
         {
           method: "GET",
           path: "/ai/luminai",
-          description: "Generate AI responses using DeepSeek-R1",
+          description: "Generate AI responses using LuminAI",
           mediaType: "application/json",
           parameters: [
             { name: "text", type: "string", required: true, description: "The text prompt to send to the AI" },
@@ -192,7 +192,7 @@ export const siteConfig = {
         {
           method: "GET",
           path: "/ai/deepseek-r1",
-          description: "Generate AI responses using LuminAI",
+          description: "Generate AI responses using DeepSeek-R1",
           mediaType: "application/json",
           parameters: [
             { name: "text", type: "string", required: true, description: "The text prompt to send to the AI" },
