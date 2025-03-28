@@ -214,6 +214,22 @@ export const siteConfig = {
       ],
     },
     {
+  name: "Download",
+  color: "red",
+  endpoints: [
+    {
+      method: "GET",
+      path: "/youtube/ytmp3",
+      description: "Convert YouTube video to MP3",
+      mediaType: "audio/mpeg",
+      parameters: [
+        { name: "url", type: "string", required: true, description: "YouTube video URL" },
+      ],
+      versions: ["v1", "v2"],
+    },
+  ],
+}, 
+    {
       name: "Maker",
       color: "purple",
       endpoints: [
