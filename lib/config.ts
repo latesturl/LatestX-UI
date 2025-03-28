@@ -230,6 +230,22 @@ export const siteConfig = {
   ],
 }, 
     {
+  name: "Search",
+  color: "green",
+  endpoints: [
+    {
+      method: "GET",
+      path: "/search/apk",
+      description: "Search for APKs in PlayStore",
+      mediaType: "application/json",
+      parameters: [
+        { name: "q", type: "string", required: true, description: "Search query" },
+      ],
+      versions: ["v1", "v2"],
+    },
+  ],
+}, 
+    {
       name: "Maker",
       color: "purple",
       endpoints: [
