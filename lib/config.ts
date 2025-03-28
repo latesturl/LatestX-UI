@@ -9,7 +9,7 @@ export const siteConfig = {
 
   // Maintenance mode configuration
   maintenance: {
-    enabled: true, // Set to true to enable maintenance mode
+    enabled: false, // Set to true to enable maintenance mode
     title: "Website Under Maintenance",
     message:
       "We're currently upgrading our systems to serve you better. Please check back in a few hours. We apologize for any inconvenience caused.",
