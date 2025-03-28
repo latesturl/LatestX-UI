@@ -6,7 +6,7 @@
 
 Welcome to **LatestX-UI**, an open-source REST API documentation website created by Raol! This project provides a clean, modern interface for documenting API endpoints with premium features and full customization capabilities.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flatesturl%2FLatestX-UI.git&framework=nextjs&project-name=latestx-ui&repository-name=LatestX-UI)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/alzzhosting/kenz-UI.git&framework=nextjs&project-name=latestx-ui&repository-name=LatestX-UI)
 
 ### ✨ Core Features
 - **Modern UI/UX** - Sleek dark-mode interface with customizable background themes
