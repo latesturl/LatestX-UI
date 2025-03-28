@@ -2,7 +2,7 @@
 export const siteConfig = {
   // Website information
   name: "Kenz-Api's",
-  description: "Beautiful, modern, and easy-to-use API documentation",
+  description: "Modern, Simple, and easy-to-use API documentation",
   version: "1.0.0",
   status: "online", // "online" or "offline"
   copyright: "© 2025 KenzXUI. All rights reserved.",
