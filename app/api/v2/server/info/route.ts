@@ -5,6 +5,14 @@ import os from "os";
 
 const CACHE_TTL = 1800; // Cache TTL dalam detik (30 menit)
 
+// Inisialisasi cache jika belum ada
+if (!memoryCache.get("totalRequests")) {
+  memoryCache.set("totalRequests", 0, CACHE_TTL);
+}
+if (!memoryCache.get("totalAPICalls")) {
+  memoryCache.set("totalAPICalls", 0, CACHE_TTL);
+}
+
 export async function GET() {
   // Cek maintenance mode
   if (siteConfig.maintenance.enabled) {
@@ -28,6 +36,10 @@ export async function GET() {
     );
   }
 
+  // Tambah total request
+  let totalRequests = memoryCache.get("totalRequests") + 1;
+  memoryCache.set("totalRequests", totalRequests, CACHE_TTL);
+
   const cacheKey = `server-info`;
   const cachedResponse = memoryCache.get(cacheKey);
 
@@ -38,8 +50,10 @@ export async function GET() {
           status: true,
           creator: siteConfig.api.creator,
           server: cachedResponse,
+          totalRequests,
+          totalAPICalls: memoryCache.get("totalAPICalls"),
           cached: true,
-          version: "v2",
+          version: "v1",
         },
         null,
         2
@@ -54,6 +68,10 @@ export async function GET() {
   }
 
   try {
+    // Tambah total API calls
+    let totalAPICalls = memoryCache.get("totalAPICalls") + 1;
+    memoryCache.set("totalAPICalls", totalAPICalls, CACHE_TTL);
+
     const uptime = process.uptime();
     const cpuUsage = os.loadavg()[0];
     const totalMem = os.totalmem();
@@ -82,7 +100,9 @@ export async function GET() {
           status: true,
           creator: siteConfig.api.creator,
           server: serverInfo,
-          version: "v2",
+          totalRequests,
+          totalAPICalls,
+          version: "v1",
         },
         null,
         2
