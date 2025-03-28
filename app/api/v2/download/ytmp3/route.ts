@@ -2,11 +2,11 @@ import { NextResponse } from "next/server"
 import { siteConfig } from "@/lib/config"
 import { memoryCache } from "@/lib/cache"
 
-// Cache TTL (waktu simpan cache) dalam detik
-const CACHE_TTL = 1800 // 30 menit
+// Cache TTL dalam detik (30 menit)
+const CACHE_TTL = 1800
 
 export async function GET(request: Request) {
-  // Cek apakah mode maintenance aktif
+  // Cek maintenance mode
   if (siteConfig.maintenance.enabled) {
     return new NextResponse(
       JSON.stringify(
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
         2
       ),
       {
-        status: 503, // Service Unavailable
+        status: 503,
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           "Cache-Control": "no-store",
@@ -48,11 +48,9 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Buat cache key berdasarkan URL
     const cacheKey = `ytmp3-${url}`
-
-    // Cek apakah data sudah ada di cache
     const cachedResponse = memoryCache.get(cacheKey)
+
     if (cachedResponse) {
       return new NextResponse(
         JSON.stringify(
@@ -75,18 +73,10 @@ export async function GET(request: Request) {
       )
     }
 
-    // Jika tidak ada di cache, request ke API eksternal
-    const response = await fetch("https://api.example.com/ytmp3", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ url }),
-    })
-
+    // Fetch data dari API eksternal
+    const response = await fetch(`https://api.siputzx.my.id/api/d/ytmp3?url=${encodeURIComponent(url)}`)
     const data = await response.json()
 
-    // Simpan di cache jika respons sukses
     if (data.result) {
       memoryCache.set(cacheKey, data.result, CACHE_TTL)
     }
