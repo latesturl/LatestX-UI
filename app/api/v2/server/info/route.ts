@@ -1,17 +1,10 @@
 import { NextResponse } from "next/server";
 import { siteConfig } from "@/lib/config";
-import { memoryCache } from "@/lib/cache";
 import os from "os";
 
-const CACHE_TTL = 1800; // Cache TTL dalam detik (30 menit)
-
-// Inisialisasi cache jika belum ada
-if (!memoryCache.get("totalRequests")) {
-  memoryCache.set("totalRequests", 0, CACHE_TTL);
-}
-if (!memoryCache.get("totalAPICalls")) {
-  memoryCache.set("totalAPICalls", 0, CACHE_TTL);
-}
+// Variabel global buat nyimpen total request & total API call
+global.totalRequests = global.totalRequests || 0;
+global.totalAPICalls = global.totalAPICalls || 0;
 
 export async function GET() {
   // Cek maintenance mode
@@ -37,40 +30,11 @@ export async function GET() {
   }
 
   // Tambah total request
-  let totalRequests = memoryCache.get("totalRequests") + 1;
-  memoryCache.set("totalRequests", totalRequests, CACHE_TTL);
-
-  const cacheKey = `server-info`;
-  const cachedResponse = memoryCache.get(cacheKey);
-
-  if (cachedResponse) {
-    return new NextResponse(
-      JSON.stringify(
-        {
-          status: true,
-          creator: siteConfig.api.creator,
-          server: cachedResponse,
-          totalRequests,
-          totalAPICalls: memoryCache.get("totalAPICalls"),
-          cached: true,
-          version: "v1",
-        },
-        null,
-        2
-      ),
-      {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          "Cache-Control": "public, max-age=1800, s-maxage=3600",
-        },
-      }
-    );
-  }
+  global.totalRequests++;
 
   try {
     // Tambah total API calls
-    let totalAPICalls = memoryCache.get("totalAPICalls") + 1;
-    memoryCache.set("totalAPICalls", totalAPICalls, CACHE_TTL);
+    global.totalAPICalls++;
 
     const uptime = process.uptime();
     const cpuUsage = os.loadavg()[0];
@@ -92,16 +56,14 @@ export async function GET() {
       arch: os.arch(),
     };
 
-    memoryCache.set(cacheKey, serverInfo, CACHE_TTL);
-
     return new NextResponse(
       JSON.stringify(
         {
           status: true,
           creator: siteConfig.api.creator,
           server: serverInfo,
-          totalRequests,
-          totalAPICalls,
+          totalRequests: global.totalRequests,
+          totalAPICalls: global.totalAPICalls,
           version: "v1",
         },
         null,
@@ -110,7 +72,7 @@ export async function GET() {
       {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          "Cache-Control": "public, max-age=1800, s-maxage=3600",
+          "Cache-Control": "public, max-age=60, s-maxage=120",
         },
       }
     );
