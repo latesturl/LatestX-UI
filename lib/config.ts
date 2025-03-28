@@ -47,7 +47,7 @@ export const siteConfig = {
 
   // API information
   api: {
-    baseUrl: "https://api.kenz.biz.id", // Updated base URL
+    baseUrl: "https://api.kenz.my.id", // Updated base URL
     creator: "KenzXUI",
     versions: ["v1", "v2"], // Available API versions
     defaultVersion: "v2", // Default API version
