@@ -37,7 +37,7 @@ export const siteConfig = {
   // Background configuration - just change the type and value to update the background
   background: {
     type: "default", // "default", "gradient", "image", "pattern"
-    value: "", // URL for image, gradient string, or pattern name
+    value: "https://kenz.cloudx.biz.id/download/1743169223464.webp", // URL for image, gradient string, or pattern name
     // Add responsive options
     responsive: {
       mobile: true, // Enable mobile-specific optimizations
