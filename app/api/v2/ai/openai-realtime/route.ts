@@ -54,7 +54,7 @@ export async function GET(request) {
           status: true,
           creator: siteConfig.api.creator,
           result: data,
-          version: "v1",
+          version: "v2",
         },
         null,
         2
