@@ -30,15 +30,15 @@ export async function GET(request: Request) {
 
   // Get query parameters
   const { searchParams } = new URL(request.url)
-  const text = searchParams.get("text")
+  const url = searchParams.get("url")
 
-  if (!text) {
+  if (!url) {
     return new NextResponse(
       JSON.stringify(
         {
           status: false,
           creator: siteConfig.api.creator,
-          error: "Text parameter is required",
+          error: "Url parameter is required",
           version: "v2",
         },
         null,
@@ -56,7 +56,7 @@ export async function GET(request: Request) {
 
   try {
     // Create a cache key based on the text parameter
-    const cacheKey = `screenshot-${text}`
+    const cacheKey = `screenshot-${url}`
 
     // Try to get from cache first
     const cachedResponse = memoryCache.get<ArrayBuffer>(cacheKey)
