@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server"
-import { siteConfig } from "@/lib/config"
-import { memoryCache } from "@/lib/cache"
+import { NextResponse } from "next/server";
+import { siteConfig } from "@/lib/config";
+import { memoryCache } from "@/lib/cache";
 
-// Cache TTL in seconds
-const CACHE_TTL = 3600 // 1 hour
+// Cache TTL dalam detik (1 jam)
+const CACHE_TTL = 3600;
 
 export async function GET(request: Request) {
-  // Check if maintenance mode is enabled
+  // Cek mode maintenance
   if (siteConfig.maintenance.enabled) {
     return new NextResponse(
       JSON.stringify(
@@ -16,7 +16,7 @@ export async function GET(request: Request) {
           message: siteConfig.maintenance.apiResponse.message,
         },
         null,
-        2,
+        2
       ),
       {
         status: 503, // Service Unavailable
@@ -24,13 +24,13 @@ export async function GET(request: Request) {
           "Content-Type": "application/json; charset=utf-8",
           "Cache-Control": "no-store",
         },
-      },
-    )
+      }
+    );
   }
 
-  // Get query parameters
-  const { searchParams } = new URL(request.url)
-  const url = searchParams.get("url")
+  // Ambil query parameter
+  const { searchParams } = new URL(request.url);
+  const url = searchParams.get("url");
 
   if (!url) {
     return new NextResponse(
@@ -38,11 +38,10 @@ export async function GET(request: Request) {
         {
           status: false,
           creator: siteConfig.api.creator,
-          error: "Url parameter is required",
-          version: "v2",
+          error: "Parameter 'url' wajib diisi",
         },
         null,
-        2,
+        2
       ),
       {
         status: 400,
@@ -50,61 +49,63 @@ export async function GET(request: Request) {
           "Content-Type": "application/json; charset=utf-8",
           "Cache-Control": "no-store",
         },
-      },
-    )
+      }
+    );
   }
 
   try {
-    // Create a cache key based on the text parameter
-    const cacheKey = `screenshot-${url}`
+    // Cache key berdasarkan URL
+    const cacheKey = `screenshot-${url}`;
 
-    // Try to get from cache first
-    const cachedResponse = memoryCache.get<ArrayBuffer>(cacheKey)
+    // Cek cache dulu
+    const cachedResponse = memoryCache.get<ArrayBuffer>(cacheKey);
     if (cachedResponse) {
       return new NextResponse(cachedResponse, {
         headers: {
-          "Content-Type": "image/png",
+          "Content-Type": "image/jpg",
           "Cache-Control": "public, max-age=1800, s-maxage=3600",
           "X-Creator": siteConfig.api.creator,
           "X-Version": "v2",
           "X-Cached": "true",
         },
-      })
+      });
     }
 
-    // Fetch the image from the external API
-    const response = await fetch(`https://shot.screenshotapi.net/v3/screenshot?token=CAT52T2-KBAMH90-QSRSS68-5G961WS&url=${encodeURIComponent(url)}&width=1920&height=1080&output=image&file_type=png&no_cookie_banners=true&wait_for_event=load`)
+    // URL API screenshot
+    const apiUrl = `https://shot.screenshotapi.net/v3/screenshot?token=CAT52T2-KBAMH90-QSRSS68-5G961WS&url=${encodeURIComponent(url)}&width=1920&height=1080&output=image&file_type=png&no_cookie_banners=true&wait_for_event=load`;
+
+    // Fetch screenshot
+    const response = await fetch(apiUrl);
 
     if (!response.ok) {
-      throw new Error(`External API returned status ${response.status}`)
+      throw new Error(`Gagal mengambil screenshot (${response.status})`);
     }
 
-    // Get the image data
-    const imageBuffer = await response.arrayBuffer()
+    // Ambil data gambar
+    const imageBuffer = await response.arrayBuffer();
 
-    // Cache the image data
-    memoryCache.set(cacheKey, imageBuffer, CACHE_TTL)
+    // Simpan ke cache
+    memoryCache.set(cacheKey, imageBuffer, CACHE_TTL);
 
-    // Return the image with appropriate headers
+    // Kirim gambar dengan header yang sesuai
     return new NextResponse(imageBuffer, {
       headers: {
-        "Content-Type": "image/png",
+        "Content-Type": "image/jpg",
         "Cache-Control": "public, max-age=1800, s-maxage=3600",
         "X-Creator": siteConfig.api.creator,
         "X-Version": "v2",
       },
-    })
+    });
   } catch (error) {
     return new NextResponse(
       JSON.stringify(
         {
           status: false,
           creator: siteConfig.api.creator,
-          error: error instanceof Error ? error.message : "An error occurred",
-          version: "v2",
+          error: error instanceof Error ? error.message : "Terjadi kesalahan",
         },
         null,
-        2,
+        2
       ),
       {
         status: 500,
@@ -112,7 +113,7 @@ export async function GET(request: Request) {
           "Content-Type": "application/json; charset=utf-8",
           "Cache-Control": "no-store",
         },
-      },
-    )
+      }
+    );
   }
 }
