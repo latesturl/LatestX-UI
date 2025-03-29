@@ -1,11 +1,11 @@
 // Site configuration
 export const siteConfig = {
   // Website information
-  name: "LatestX-Api's",
-  description: "Beautiful, modern, and easy-to-use API documentation",
+  name: "Kenz-Api's",
+  description: "Modern, Simple, and easy-to-use API documentation",
   version: "1.0.0",
   status: "online", // "online" or "offline"
-  copyright: "© 2025 LatestURL. All rights reserved.",
+  copyright: "© 2025 KenzXUI. All rights reserved.",
 
   // Maintenance mode configuration
   maintenance: {
@@ -30,14 +30,14 @@ export const siteConfig = {
     src: "https://raw.githubusercontent.com/latesturl/dbCDN/refs/heads/main/logo.svg",
     width: 40,
     height: 40,
-    alt: "LatestX-Api's", // Alt text for accessibility
+    alt: "Kenzz-Api's", // Alt text for accessibility
     autoInvert: true, // Automatically invert logo color based on theme
   },
 
   // Background configuration - just change the type and value to update the background
   background: {
-    type: "default", // "default", "gradient", "image", "pattern"
-    value: "", // URL for image, gradient string, or pattern name
+    type: "image", // "default", "gradient", "image", "pattern"
+    value: "https://kenz.cloudx.biz.id/download/1743169223464.webp", // URL for image, gradient string, or pattern name
     // Add responsive options
     responsive: {
       mobile: true, // Enable mobile-specific optimizations
@@ -47,8 +47,8 @@ export const siteConfig = {
 
   // API information
   api: {
-    baseUrl: "https://api.raolprojects.my.id", // Updated base URL
-    creator: "LatestURL",
+    baseUrl: "https://api.kenz.my.id", // Updated base URL
+    creator: "KenzXUI",
     versions: ["v1", "v2"], // Available API versions
     defaultVersion: "v2", // Default API version
     rateLimit: {
@@ -72,7 +72,7 @@ export const siteConfig = {
 
   // Social links
   links: {
-    github: "https://github.com/latesturl",
+    github: "https://github.com/kenz-publish",
   },
 
   // Status codes
@@ -190,12 +190,40 @@ export const siteConfig = {
           versions: ["v1", "v2"], // Available in both versions
         },
         {
+          method: "GET",
+          path: "/ai/deepseek-r1",
+          description: "Generate AI responses using DeepSeek-R1",
+          mediaType: "application/json",
+          parameters: [
+            { name: "text",
+              type: "string",
+              required: true, 
+              description: "The text prompt to send to the AI" 
+            },
+          ],
+          versions: ["v1", "v2"], // Available in both versions
+        },
+        {
+        method: "GET",
+        path: "/ai/openai-realtime",
+        description: "Generate text using OpenAI",
+        mediaType: "application/json",
+        parameters: [
+          { name: "text", type: "string", required: true, description: "Input text for AI response" },
+        ],
+        versions: ["v1", "v2"],
+        },
+        {
           method: "POST",
           path: "/ai/hydromind",
           description: "Generate AI responses using HydroMind",
           mediaType: "application/json",
           parameters: [
-            { name: "text", type: "string", required: true, description: "The text prompt to send to the AI" },
+            { name: "text", 
+              type: "string",
+              required: true, 
+              description: "The text prompt to send to the AI" 
+            },
             {
               name: "model",
               type: "string",
@@ -214,6 +242,69 @@ export const siteConfig = {
       ],
     },
     {
+  name: "Download",
+  color: "red",
+  endpoints: [
+    {
+      method: "GET",
+      path: "/download/ytmp3",
+      description: "Convert YouTube video to MP3",
+      mediaType: "audio/mp3",
+      parameters: [
+        { name: "url", type: "string", required: true, description: "YouTube video URL" },
+      ],
+      versions: ["v1", "v2"],
+    },
+    {
+        method: "GET",
+        path: "/download/tiktokdl",
+        description: "Download TikTok video",
+        mediaType: "video/mp4",
+        parameters: [
+          { name: "url", 
+            type: "string",
+            required: true, 
+            description: "TikTok video URL" },
+        ],
+        versions: ["v1", "v2"],
+    },
+  ],
+}, 
+{
+  name: "Search",
+  color: "green",
+  endpoints: [
+    {
+      method: "GET",
+      path: "/search/apk",
+      description: "Search for APKs in PlayStore",
+      mediaType: "application/json",
+      parameters: [
+        { name: "q", 
+         type: "string", 
+         required: true, 
+         description: "Search query"
+        },
+      ],
+      versions: ["v1", "v2"],
+    }, 
+    {
+        method: "GET",
+        path: "/search/youtube",
+        description: "Search for YouTube video",
+        mediaType: "application/json",
+        parameters: [
+          { name: "q", 
+            type: "string", 
+            required: true, 
+            description: "Search query" 
+          },
+        ],
+        versions: ["v2"],
+    },
+  ],
+}, 
+{
       name: "Maker",
       color: "purple",
       endpoints: [
@@ -226,6 +317,16 @@ export const siteConfig = {
             { name: "text", type: "string", required: true, description: "The text to display in the brat image" },
           ],
           versions: ["v1", "v2"], // Available in both versions
+        },
+        {
+        method: "GET",
+        path: "/maker/ssweb",
+        description: "Mengambil screenshot dari sebuah website dalam format PNG dengan ukuran 16:9",
+        mediaType: "image/jpeg",
+        parameters: [
+          { name: "url", type: "string", required: true, description: "URL website yang ingin di-screenshot" },
+        ],
+        versions: ["v1", "v2"],
         },
         {
           method: "GET",
@@ -253,6 +354,20 @@ export const siteConfig = {
         },
       ],
     },
+    {
+    name: "Server",
+    color: "red",
+    endpoints: [
+      {
+        method: "GET",
+        path: "/server/info",
+        description: "Get server information",
+        mediaType: "application/json",
+        parameters: [],
+        versions: ["v2"],
+      },
+    ],
+  },
   ],
 }
 
