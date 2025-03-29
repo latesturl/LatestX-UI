@@ -257,12 +257,14 @@ export const siteConfig = {
       description: "Search for APKs in PlayStore",
       mediaType: "application/json",
       parameters: [
-        { name: "q", type: "string", required: true, description: "Search query" },
+        { name: "q", 
+         type: "string", 
+         required: true, 
+         description: "Search query"
+        },
       ],
       versions: ["v1", "v2"],
-    },
-  ],
-}, 
+    }, 
     {
         method: "GET",
         path: "/search/youtube",
@@ -277,7 +279,9 @@ export const siteConfig = {
         ],
         versions: ["v2"],
     },
-    {
+  ],
+}, 
+{
       name: "Maker",
       color: "purple",
       endpoints: [
