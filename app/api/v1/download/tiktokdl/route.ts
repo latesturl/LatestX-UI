@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import { siteConfig } from "@/lib/config";
+import { memoryCache } from "@/lib/cache";
 
-export async function GET(request) {
-  // Cek maintenance mode
+// Cache TTL (dalam detik)
+const CACHE_TTL = 3600; // 1 jam
+
+export async function GET(request: Request) {
+  // Cek mode maintenance
   if (siteConfig.maintenance.enabled) {
     return new NextResponse(
       JSON.stringify(
@@ -15,7 +19,7 @@ export async function GET(request) {
         2
       ),
       {
-        status: 503,
+        status: 503, // Service Unavailable
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           "Cache-Control": "no-store",
@@ -24,26 +28,50 @@ export async function GET(request) {
     );
   }
 
+  // Ambil parameter query
   const { searchParams } = new URL(request.url);
   const url = searchParams.get("url");
 
   if (!url) {
-    return NextResponse.json(
-      {
-        status: false,
-        creator: siteConfig.api.creator,
-        error: "Query parameter 'url' is required",
-      },
+    return new NextResponse(
+      JSON.stringify(
+        {
+          status: false,
+          creator: siteConfig.api.creator,
+          error: "Parameter 'url' diperlukan",
+          version: "v1",
+        },
+        null,
+        2
+      ),
       {
         status: 400,
         headers: {
           "Content-Type": "application/json; charset=utf-8",
+          "Cache-Control": "no-store",
         },
       }
     );
   }
 
   try {
+    // Buat cache key berdasarkan URL
+    const cacheKey = `tiktokdl-${url}`;
+    const cachedResponse = memoryCache.get<ArrayBuffer>(cacheKey);
+
+    if (cachedResponse) {
+      return new NextResponse(cachedResponse, {
+        headers: {
+          "Content-Type": "video/mp4",
+          "Cache-Control": "public, max-age=1800, s-maxage=3600",
+          "X-Creator": siteConfig.api.creator,
+          "X-Version": "v1",
+          "X-Cached": "true",
+        },
+      });
+    }
+
+    // Kirim request ke API eksternal
     const formData = new FormData();
     formData.append("id", url);
 
@@ -52,33 +80,32 @@ export async function GET(request) {
       body: formData,
     });
 
-    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(`Gagal mendapatkan video (Status ${response.status})`);
+    }
 
-    return new NextResponse(
-      JSON.stringify(
-        {
-          status: true,
-          creator: siteConfig.api.creator,
-          result: data,
-          version: "v1",
-        },
-        null,
-        2
-      ),
-      {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          "Cache-Control": "public, max-age=60, s-maxage=120",
-        },
-      }
-    );
+    const videoBuffer = await response.arrayBuffer();
+
+    // Simpan di cache
+    memoryCache.set(cacheKey, videoBuffer, CACHE_TTL);
+
+    // Kirim response dalam format MP4
+    return new NextResponse(videoBuffer, {
+      headers: {
+        "Content-Type": "video/mp4",
+        "Cache-Control": "public, max-age=1800, s-maxage=3600",
+        "X-Creator": siteConfig.api.creator,
+        "X-Version": "v1",
+      },
+    });
   } catch (error) {
     return new NextResponse(
       JSON.stringify(
         {
           status: false,
           creator: siteConfig.api.creator,
-          error: error instanceof Error ? error.message : "An error occurred",
+          error: error instanceof Error ? error.message : "Terjadi kesalahan",
+          version: "v1",
         },
         null,
         2
