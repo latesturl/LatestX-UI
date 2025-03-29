@@ -247,7 +247,7 @@ export const siteConfig = {
     },
   ],
 }, 
-    {
+{
   name: "Search",
   color: "green",
   endpoints: [
@@ -263,6 +263,20 @@ export const siteConfig = {
     },
   ],
 }, 
+    {
+        method: "GET",
+        path: "/search/youtube",
+        description: "Search for YouTube video",
+        mediaType: "application/json",
+        parameters: [
+          { name: "q", 
+            type: "string", 
+            required: true, 
+            description: "Search query" 
+          },
+        ],
+        versions: ["v2"],
+    },
     {
       name: "Maker",
       color: "purple",
