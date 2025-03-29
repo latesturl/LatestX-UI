@@ -319,6 +319,16 @@ export const siteConfig = {
           versions: ["v1", "v2"], // Available in both versions
         },
         {
+        method: "GET",
+        path: "/maker/ssweb",
+        description: "Mengambil screenshot dari sebuah website dalam format PNG dengan ukuran 16:9",
+        mediaType: "image/png",
+        parameters: [
+          { name: "url", type: "string", required: true, description: "URL website yang ingin di-screenshot" },
+        ],
+        versions: ["v1", "v2"],
+        },
+        {
           method: "GET",
           path: "/maker/bratvid",
           description: "Generate a brat style video with custom text",
