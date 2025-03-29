@@ -204,6 +204,16 @@ export const siteConfig = {
           versions: ["v1", "v2"], // Available in both versions
         },
         {
+        method: "GET",
+        path: "/ai/openai-realtime",
+        description: "Generate text using OpenAI",
+        mediaType: "application/json",
+        parameters: [
+          { name: "text", type: "string", required: true, description: "Input text for AI response" },
+        ],
+        versions: ["v1", "v2"],
+        },
+        {
           method: "POST",
           path: "/ai/hydromind",
           description: "Generate AI responses using HydroMind",
