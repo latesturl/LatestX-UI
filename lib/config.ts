@@ -255,6 +255,19 @@ export const siteConfig = {
       ],
       versions: ["v1", "v2"],
     },
+    {
+        method: "GET",
+        path: "/download/tiktokdl",
+        description: "Download TikTok video",
+        mediaType: "video/mp4",
+        parameters: [
+          { name: "url", 
+            type: "string",
+            required: true, 
+            description: "TikTok video URL" },
+        ],
+        versions: ["v1", "v2"],
+    },
   ],
 }, 
 {
