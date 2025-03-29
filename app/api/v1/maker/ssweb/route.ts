@@ -72,7 +72,7 @@ export async function GET(request: Request) {
     }
 
     // URL API screenshot
-    const apiUrl = `https://image.thum.io/get/width/1920/crop/1080/noanimate/${encodeURIComponent(url)}`;
+    const apiUrl = `https://shot.screenshotapi.net/v3/screenshot?token=CAT52T2-KBAMH90-QSRSS68-5G961WS&url=${encodeURIComponent(url)}&width=1920&height=1080&output=image&file_type=png&no_cookie_banners=true&wait_for_event=load`;
 
     // Fetch screenshot
     const response = await fetch(apiUrl);
