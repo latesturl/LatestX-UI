@@ -195,7 +195,11 @@ export const siteConfig = {
           description: "Generate AI responses using DeepSeek-R1",
           mediaType: "application/json",
           parameters: [
-            { name: "text", type: "string", required: true, description: "The text prompt to send to the AI" },
+            { name: "text",
+              type: "string",
+              required: true, 
+              description: "The text prompt to send to the AI" 
+            },
           ],
           versions: ["v1", "v2"], // Available in both versions
         },
@@ -205,7 +209,11 @@ export const siteConfig = {
           description: "Generate AI responses using HydroMind",
           mediaType: "application/json",
           parameters: [
-            { name: "text", type: "string", required: true, description: "The text prompt to send to the AI" },
+            { name: "text", 
+              type: "string",
+              required: true, 
+              description: "The text prompt to send to the AI" 
+            },
             {
               name: "model",
               type: "string",
